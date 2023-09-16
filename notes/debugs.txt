@@ -1,0 +1,11 @@
+WARNING: pip is configured with locations that require TLS/SSL, however the ssl module in Python is not available
+
+mkdir -p ~/.pip
+vim ~/.pip/pip.conf
+
+编辑内容：
+[global]
+index-url = http://mirrors.aliyun.com/pypi/simple/
+
+[install]
+trusted-host = mirrors.aliyun.com

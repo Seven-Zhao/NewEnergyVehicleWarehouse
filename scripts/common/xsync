@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#1. check param numbers
+if [ $# -lt 1 ]
+then
+    echo Not Enough Arguement!
+    exit;
+fi
+
+#2. Check if rsync command exists,if not,install it
+if ! command -v rsync &> /dev/null; then
+    if command -v yum &> /dev/null; then
+        sudo yum install -y rsync
+    elif command -v apt-get &> /dev/null; then
+        sudo apt-get install -y rsync
+    else
+        echo "Cannot install rsync,please install it manually."
+        exit 1
+    fi
+fi
+
+#3. Check if --host argument is provided
+if [[ "$1" == "--host="* ]]; then
+    #Parse hosts from argument
+    hosts=$(echo ${1#*=}| tr ',' '\n')
+else
+    hosts=$(cat /home/Seven/bin/host_ips)
+fi
+
+#4.Traverse through each host
+for host in $hosts
+do
+    echo ====================  $host  ====================
+    #5.Check if file exists
+    # shellcheck disable=SC2068
+    for file in $@
+    do
+      #6.Ignore --host argument
+      if [[ "$file" == "--host="* ]]
+      then
+        continue
+      fi
+
+      if [ -e "$file" ]; then
+        # Get parent directory
+        pdir=$(cd -P $(dirname $file); pwd)
+
+        #Get file name
+        fname=$(basename $file)
+        ssh $host "mkdir -p $pdir"
+        rsync -av $pdir/$fname $host:$pdir
+      else
+        echo $file does not exists!
+      fi
+  done
+done
