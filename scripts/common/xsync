@@ -43,6 +43,8 @@ do
 
       if [ -e "$file" ]; then
         # Get parent directory
+        # shellcheck disable=SC2046
+        # shellcheck disable=SC2164
         pdir=$(cd -P $(dirname $file); pwd)
 
         #Get file name
