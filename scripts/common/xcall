@@ -3,13 +3,15 @@
 #Check if -h argument is provided
 if [[ "$1" == "-h="* ]]; then
     #Parse hosts from argument
-    hosts=$(echo ${1#*=}| tr ',' '\n')
+    hosts=$(echo "${1#*=}"| tr ',' '\n')
+    shift
 else
     hosts=$(cat ~/bin/host_ips)
 fi
 
 for i in $hosts
 do
-    echo --------- $i ----------
-    ssh $i "$*"
+    echo --------- "$i" ----------
+    # shellcheck disable=SC2029
+    ssh "$i" "$*"
 done
