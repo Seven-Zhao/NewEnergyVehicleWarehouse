@@ -1,0 +1,115 @@
+{
+  "job": {
+    "content": [
+      {
+        "reader": {
+          "name": "mysqlreader",
+          "parameter": {
+            "column": [
+              "id",
+              "type_id",
+              "type",
+              "sale_type",
+              "trademark",
+              "company",
+              "seating_capacity",
+              "power_type",
+              "charge_type",
+              "category",
+              "weight_kg",
+              "warranty"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": [
+                  "jdbc:mysql://hadoop101:3306/car_data"
+                ],
+                "table": [
+                  "car_info"
+                ]
+              }
+            ],
+            "password": "000000",
+            "splitPk": "",
+            "username": "root"
+          }
+        },
+        "writer": {
+          "name": "hdfswriter",
+          "parameter": {
+            "column": [
+              {
+                "name": "id",
+                "type": "string"
+              },
+              {
+                "name": "type_id",
+                "type": "string"
+              },
+              {
+                "name": "type",
+                "type": "string"
+              },
+              {
+                "name": "sale_type",
+                "type": "string"
+              },
+              {
+                "name": "trademark",
+                "type": "string"
+              },
+              {
+                "name": "company",
+                "type": "string"
+              },
+              {
+                "name": "seating_capacity",
+                "type": "bigint"
+              },
+              {
+                "name": "power_type",
+                "type": "string"
+              },
+              {
+                "name": "charge_type",
+                "type": "string"
+              },
+              {
+                "name": "category",
+                "type": "string"
+              },
+              {
+                "name": "weight_kg",
+                "type": "bigint"
+              },
+              {
+                "name": "warranty",
+                "type": "string"
+              }
+            ],
+            "compress": "gzip",
+            "defaultFS": "hdfs://mycluster",
+            "fieldDelimiter": "\t",
+            "fileName": "car_info",
+            "fileType": "text",
+            "hadoopConfig": {
+              "dfs.client.failover.proxy.provider.mycluster": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
+              "dfs.ha.namenodes.mycluster": "nn1,nn2,nn3",
+              "dfs.namenode.rpc-address.mycluster.nn1": "hadoop101:8020",
+              "dfs.namenode.rpc-address.mycluster.nn2": "hadoop102:8020",
+              "dfs.namenode.rpc-address.mycluster.nn3": "hadoop103:8020",
+              "dfs.nameservices": "mycluster"
+            },
+            "path": "${targetdir}",
+            "writeMode": "append"
+          }
+        }
+      }
+    ],
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    }
+  }
+}

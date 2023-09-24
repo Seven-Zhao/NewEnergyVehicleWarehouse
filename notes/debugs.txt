@@ -9,3 +9,16 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 
 [install]
 trusted-host = mirrors.aliyun.com
+
+=========datax 连接mysql失败=============
+Caused by: java.lang.Exception: DataX无法连接对应的数据库，可能原因是：1) 配置的ip/port/database/jdbc错误，无法连接。2) 配置的username/password错误，鉴权失败。请和DBA确认该数据库的连接信息是否正确。
+	at com.alibaba.datax.plugin.rdbms.util.DBUtil$2.call(DBUtil.java:71)
+	at com.alibaba.datax.plugin.rdbms.util.DBUtil$2.call(DBUtil.java:51)
+	at com.alibaba.datax.common.util.RetryUtil$Retry.call(RetryUtil.java:164)
+	at com.alibaba.datax.common.util.RetryUtil$Retry.doRetry(RetryUtil.java:111)
+	at com.alibaba.datax.common.util.RetryUtil.executeWithRetry(RetryUtil.java:30)
+	at com.alibaba.datax.plugin.rdbms.util.DBUtil.chooseJdbcUrl(DBUtil.java:51)
+
+这种一般是驱动问题：
+mysql驱动存放位置：/opt/module/datax/plugin/reader/mysqlreader/libs
+驱动版本：mysql-connector-j-8.0.31.jar  与mysql的版本相对应
