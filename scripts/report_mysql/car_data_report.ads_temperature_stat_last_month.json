@@ -1,0 +1,53 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "hdfsreader",
+          "parameter": {
+            "path": "${exportdir}",
+            "defaultFS": "hdfs://hadoop101:8020",
+            "column": [
+              "*"
+            ],
+            "fileType": "text",
+            "encoding": "UTF-8",
+            "fieldDelimiter": "\t",
+            "nullFormat": "\\N"
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "replace",
+            "username": "root",
+            "password": "000000",
+            "column": [
+              "vin",
+              "mon",
+              "max_motor_temperature",
+              "avg_motor_temperature",
+              "max_motor_controller_temperature",
+              "avg_motor_controller_temperature",
+              "max_battery_temperature",
+              "battery_temperature_abnormal_count"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://hadoop101:3306/car_data_report?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8",
+                "table": [
+                  "ads_temperature_stat_last_month"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

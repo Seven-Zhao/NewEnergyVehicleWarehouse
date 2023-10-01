@@ -1,0 +1,51 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "hdfsreader",
+          "parameter": {
+            "path": "${exportdir}",
+            "defaultFS": "hdfs://hadoop101:8020",
+            "column": [
+              "*"
+            ],
+            "fileType": "text",
+            "encoding": "UTF-8",
+            "fieldDelimiter": "\t",
+            "nullFormat": "\\N"
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "replace",
+            "username": "root",
+            "password": "000000",
+            "column": [
+              "vin",
+              "mon",
+              "alarm_count",
+              "l1_alarm_count",
+              "l2_alarm_count",
+              "l3_alarm_count"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://hadoop101:3306/car_data_report?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8",
+                "table": [
+                  "ads_alarm_stat_last_month"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

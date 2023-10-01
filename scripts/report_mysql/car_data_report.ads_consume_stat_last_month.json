@@ -1,0 +1,56 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "hdfsreader",
+          "parameter": {
+            "path": "${exportdir}",
+            "defaultFS": "hdfs://hadoop101:8020",
+            "column": [
+              "*"
+            ],
+            "fileType": "text",
+            "encoding": "UTF-8",
+            "fieldDelimiter": "\t",
+            "nullFormat": "\\N"
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "replace",
+            "username": "root",
+            "password": "000000",
+            "column": [
+              "vin",
+              "mon",
+              "soc_per_charge",
+              "duration_per_charge",
+              "charge_count",
+              "fast_charge_count",
+              "slow_charge_count",
+              "fully_charge_count",
+              "soc_per_100km",
+              "soc_per_run",
+              "soc_last_100km"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://hadoop101:3306/car_data_report?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8",
+                "table": [
+                  "ads_consume_stat_last_month"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
